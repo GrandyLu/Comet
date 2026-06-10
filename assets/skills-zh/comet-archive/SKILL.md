@@ -48,6 +48,7 @@ fi
 4. Plan 前置元数据标注（archived-with）
 5. 移动 change 到归档目录
 6. 通过 `comet-state transition <archive-name> archived` 更新 `archived: true`
+7. 执行 `codegraph sync` 同步归档后的 CodeGraph 索引
 
 如脚本返回非零退出码，报告错误并停止。
 如脚本返回零退出码，归档完成。
@@ -69,6 +70,7 @@ brainstorming → delta spec → 实施 → 验证 → 主 spec 覆盖 → desig
 - 归档脚本执行成功（退出码 0）
 - 归档目录 `openspec/changes/archive/YYYY-MM-DD-<change-name>/` 存在
 - 归档后的 `.comet.yaml` 中 `archived: true`
+- `codegraph sync` 已在归档成功路径中执行完成
 
 归档脚本会把 `openspec/changes/<name>/` 移动到 `openspec/changes/archive/YYYY-MM-DD-<name>/`。归档成功后**不要再对原 change 名运行** `"$COMET_BASH" "$COMET_GUARD" <change-name> archive`，因为原活跃目录已经不存在。归档完整性以脚本退出码和归档目录状态为准。
 

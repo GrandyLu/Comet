@@ -400,6 +400,7 @@ describeShell('comet shell scripts', () => {
       [
         '#!/bin/bash',
         'case "$1" in',
+        '  init) mkdir -p "$2/.codegraph"; echo "initialized $2" ;;',
         '  index) echo "indexed $2" ;;',
         '  status) echo "Files: 3"; echo "Nodes: 7" ;;',
         '  files) echo "src/app.js (javascript, 2 symbols)" ;;',
@@ -438,6 +439,8 @@ describeShell('comet shell scripts', () => {
     expect(result.status).toBe(0);
     expect(context).toContain('# Comet CodeGraph Context');
     expect(context).toContain('- Mode: scan');
+    expect(context).toContain('## Initialize CodeGraph');
+    expect(context).toContain('initialized');
     expect(context).toContain('## Index Output');
     expect(context).toContain('indexed');
     expect(context).toContain('## Index Status');
@@ -1333,6 +1336,15 @@ describeShell('comet shell scripts', () => {
 
   it('reports accurate archive step counts when syncing and annotating', async () => {
     const archiveScript = path.join(tmpDir, 'scripts', 'comet-archive.sh');
+    const fakeBinDir = path.join(tmpDir, 'fake-bin');
+    const fakeCodegraph = path.join(fakeBinDir, 'codegraph');
+    const syncMarker = path.join(tmpDir, 'codegraph-sync.log');
+    await fs.mkdir(fakeBinDir, { recursive: true });
+    await writeFile(
+      fakeCodegraph,
+      ['#!/bin/bash', 'echo "$1" >> "$CODEGRAPH_SYNC_MARKER"', ''].join('\n'),
+    );
+    await fs.chmod(fakeCodegraph, 0o755);
     await createChange(
       tmpDir,
       'ready-to-archive',
@@ -1373,10 +1385,14 @@ describeShell('comet shell scripts', () => {
       'delta spec\n',
     );
 
-    const result = runBash(tmpDir, archiveScript, ['ready-to-archive']);
+    const result = runBash(tmpDir, archiveScript, ['ready-to-archive'], {
+      PATH: `${fakeBinDir}${path.delimiter}${process.env.PATH ?? ''}`,
+      CODEGRAPH_SYNC_MARKER: syncMarker,
+    });
 
     expect(result.status).toBe(0);
-    expect(result.stderr).toContain('Archive complete. 7/7 steps succeeded.');
+    expect(result.stderr).toContain('Archive complete. 8/8 steps succeeded.');
+    await expect(fs.readFile(syncMarker, 'utf-8')).resolves.toBe('sync\n');
   }, 20_000);
 
   it('uses plan base-ref to scale verification after changes have been committed', async () => {

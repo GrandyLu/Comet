@@ -9,7 +9,7 @@ All notable changes to @rpamis/comet will be documented in this file.
 - **Comet scan workflow**: Added `/comet-scan` and CodeGraph context generation so existing projects can be indexed first and then explored into OpenSpec documentation from structured code evidence.
 - **CodeGraph installer integration**: `comet init` now prepares the CodeGraph dependency path and Comet exposes a shared `COMET_CODEGRAPH_CONTEXT` helper for scan, open, design, build, verify, hotfix, tweak, and dirty-worktree flows.
 - **Callback relationship hints**: CodeGraph context now infers named JavaScript/TypeScript callback references such as `.filter(isOpenTask)` from CodeGraph-directed source files so specs can capture higher-order-function relationships that direct callers/callees may miss.
-- **Scan demo project**: Added a small CommonJS demo project with an optimization request and tests to exercise CodeGraph-backed spec generation behavior.
+- **Vue scan demo project**: Added a Vue 3 demo project with routes, pages, shared components, a store, a composable, an optimization request, and structure tests to evaluate CodeGraph-backed frontend spec generation.
 - **Plan-ready build pause state**: Added `build_pause` as a dedicated build-phase pause marker so Comet can stop after plan generation without confusing the pause with the actual execution method.
 - **Plan-ready pause design**: Added a design record for the model-switching pause workflow, covering recovery behavior, stale pause handling, and plan-missing remediation.
 
@@ -17,6 +17,8 @@ All notable changes to @rpamis/comet will be documented in this file.
 
 - **Code evidence routing**: Comet skills now pass `openspec/.comet/codegraph-context.md` into OpenSpec and Superpowers steps, prioritizing Relationship Analysis, Impact, Affected Tests, and targeted excerpts over full source-tree scans.
 - **Comet artifact path configuration**: CodeGraph context paths now flow through `COMET_ARTIFACTS_DIR` and `COMET_CODEGRAPH_CONTEXT_FILE`, making future artifact directory consolidation configurable from `comet-env.sh`.
+- **CodeGraph initialization**: The CodeGraph context exporter now initializes clean projects with `codegraph init` before running `codegraph index`, making `/comet-scan` work in fresh demo projects.
+- **Archive CodeGraph sync**: `/comet-archive` now runs `codegraph sync` after marking a change archived so the CodeGraph index reflects the finalized code and spec state before the next workflow starts.
 - **Dirty worktree attribution**: Dirty-worktree handling now generates CodeGraph context before attribution so resumed work can reason from affected symbols, changed files, and targeted snippets.
 - **Build recovery routing**: `/comet` and `/comet-build` now recognize `build_pause: plan-ready`, reuse the existing plan, and resume at workspace isolation and execution-method selection instead of regenerating the plan.
 - **Bilingual workflow documentation**: Chinese and English Comet skills now describe the plan-ready pause point, clarify that `build_pause` is not `build_mode`, and document the same state field in both README files.
@@ -32,6 +34,7 @@ All notable changes to @rpamis/comet will be documented in this file.
 
 - **CodeGraph context coverage**: Added shell-script coverage for CodeGraph context export, environment wiring, manifest inclusion, and portable script behavior.
 - **Callback hint regression**: Added coverage that CodeGraph context records `.filter(isOpenTask)` as an inferred callback relationship.
+- **Archive sync regression**: Added shell-script coverage that archive invokes `codegraph sync` and counts the post-archive refresh as a real archive step.
 - **Comet scan demo coverage**: Added demo tests that validate the sample project behavior used to evaluate `/comet-scan`.
 - **Superpowers skill invocation regression**: Added coverage that shipped Comet skill prose does not reference plugin-prefixed Superpowers aliases.
 - **Comet bash execution regression**: Added coverage for nested script calls, shipped command examples, and the shell test runner so Comet uses resolved bash paths instead of raw PATH `bash`.

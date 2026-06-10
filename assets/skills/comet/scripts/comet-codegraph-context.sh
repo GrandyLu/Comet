@@ -352,6 +352,18 @@ Use this file as the primary codebase evidence for Comet/OpenSpec/Superpowers wo
 EOF
 
 append_phase_guidance
+if [ ! -d "$PROJECT_PATH/.codegraph" ]; then
+  append_command_section "Initialize CodeGraph" codegraph init "$PROJECT_PATH"
+else
+  {
+    echo ""
+    echo "## Initialize CodeGraph"
+    echo ""
+    echo '```text'
+    echo "CodeGraph already initialized at $PROJECT_PATH/.codegraph"
+    echo '```'
+  } >> "$OUTPUT_FILE"
+fi
 append_command_section "Index Output" codegraph index "$PROJECT_PATH"
 append_command_section "Index Status" codegraph status "$PROJECT_PATH"
 append_command_section "Indexed File Structure" codegraph files
