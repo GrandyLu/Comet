@@ -217,6 +217,25 @@ Updates the npm package and refreshes installed Comet skills in detected project
 
 </details>
 
+<details>
+<summary><code>comet uninstall [path]</code> — Remove Comet skills, rules, and hooks</summary>
+
+Safely removes Comet-distributed skills, rules, and hooks from all detected platforms. Preserves user-defined hooks and non-Comet configuration.
+
+| Option            | Description                                    |
+|-------------------|------------------------------------------------|
+| `--force`         | Skip confirmation prompt                       |
+| `--scope <scope>` | Uninstall only `global` or `project` scope     |
+| `--json`          | Output removal results as JSON                 |
+
+```bash
+comet uninstall              # Interactive — shows targets, asks for confirmation
+comet uninstall --force      # Non-interactive — removes everything immediately
+comet uninstall --scope project  # Only remove project-level installations
+```
+
+</details>
+
 | Command           | Description  |
 |-------------------|--------------|
 | `comet --help`    | Show help    |
@@ -224,7 +243,7 @@ Updates the npm package and refreshes installed Comet skills in detected project
 
 ## Supported Platforms
 
-`comet init` supports 28 AI coding platforms:
+`comet init` supports 29 AI coding platforms:
 
 <details>
 <summary>View full platform list</summary>
@@ -238,13 +257,14 @@ Updates the npm package and refreshes installed Comet skills in detected project
 | GitHub Copilot     | `.github/`   | Gemini CLI | `.gemini/`    |
 | Amazon Q Developer | `.amazonq/`  | Qwen Code  | `.qwen/`      |
 | Kilo Code          | `.kilocode/` | Auggie     | `.augment/`   |
-| Kiro               | `.kiro/`     | Lingma     | `.lingma/`    |
-| Junie              | `.junie/`    | CodeBuddy  | `.codebuddy/` |
-| CoStrict           | `.cospec/`   | Crush      | `.crush/`     |
-| Factory Droid      | `.factory/`  | iFlow      | `.iflow/`     |
-| Pi                 | `.pi/`       | Qoder      | `.qoder/`     |
-| Antigravity        | `.agents/`   | Bob Shell  | `.bob/`       |
-| ForgeCode          | `.forge/`    | Trae       | `.trae/`      |
+| Kimi Code          | `.kimi-code/`| Kiro       | `.kiro/`      |
+| Lingma             | `.lingma/`   | Junie      | `.junie/`     |
+| CodeBuddy          | `.codebuddy/`| CoStrict   | `.cospec/`    |
+| Crush              | `.crush/`    | Factory Droid | `.factory/` |
+| iFlow              | `.iflow/`    | Pi         | `.pi/`        |
+| Qoder              | `.qoder/`    | Antigravity | `.agents/`   |
+| Bob Shell          | `.bob/`      | ForgeCode  | `.forge/`     |
+| Trae               | `.trae/`     |            |               |
 
 </details>
 

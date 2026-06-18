@@ -199,6 +199,13 @@ export const PLATFORMS: Platform[] = [
     hookFormat: 'kiro',
   },
   {
+    id: 'kimicode',
+    name: 'Kimi Code',
+    skillsDir: '.kimi-code',
+    globalSkillsDir: '.kimi-code',
+    openspecToolId: 'kimi',
+  },
+  {
     id: 'lingma',
     name: 'Lingma',
     skillsDir: '.lingma',
@@ -213,7 +220,13 @@ export const PLATFORMS: Platform[] = [
   { id: 'crush', name: 'Crush', skillsDir: '.crush', openspecToolId: 'crush' },
   { id: 'factory', name: 'Factory Droid', skillsDir: '.factory', openspecToolId: 'factory' },
   { id: 'iflow', name: 'iFlow', skillsDir: '.iflow', openspecToolId: 'iflow' },
-  { id: 'pi', name: 'Pi', skillsDir: '.pi', openspecToolId: 'pi' },
+  {
+    id: 'pi',
+    name: 'Pi',
+    skillsDir: '.pi',
+    globalSkillsDir: '.pi/agent',
+    openspecToolId: 'pi',
+  },
   {
     id: 'qoder',
     name: 'Qoder',
